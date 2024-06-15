@@ -50,7 +50,7 @@ def get_content(url, parser):
 def crawl_website(start_url, max_links=50, delay=1.0):
     """ Crawls a website starting from `start_url` until it collects `max_links` unique links and stores their contents, respecting robots.txt and rate limiting. """
     parser = create_robot_parser(start_url)
-    conn = storage.create_connection('website.db')
+    conn = storage.create_connection('db/websites.db')
     storage.create_table(conn)
 
     visited = set()
@@ -67,6 +67,7 @@ def crawl_website(start_url, max_links=50, delay=1.0):
                 storage.save_page(conn, current_url, content)
             links = get_links(current_url, parser, base_url)
             to_visit.update(links - visited)
+            print(f"Collected {len(visited)} pages so far.")
             if len(visited) >= max_links:
                 break
             time.sleep(delay)

@@ -1,0 +1,6 @@
+# Default folders
+/__pycache__
+/myenv
+
+# Database files
+/db
